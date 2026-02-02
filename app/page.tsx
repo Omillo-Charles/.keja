@@ -19,9 +19,51 @@ import {
   Clock,
   Briefcase,
   TrendingUp,
-  UserCircle
+  UserCircle,
+  ChevronDown,
+  ChevronRight,
+  Factory,
+  Hotel,
+  LandPlot,
+  Zap
 } from "lucide-react";
+import { CATEGORIES } from "@/lib/constants/categories";
 import { cn } from "@/lib/utils";
+
+function CategoryItem({ category, defaultOpen = false }: { category: typeof CATEGORIES[0], defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  
+  return (
+    <div className="space-y-1">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          "w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all group",
+          isOpen ? "bg-brand-dot/5 text-brand-dot" : "hover:bg-accent text-muted-foreground hover:text-foreground"
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <category.icon className={cn("h-4 w-4", isOpen ? "text-brand-dot" : "group-hover:text-brand-dot transition-colors")} />
+          <span className="text-sm font-semibold">{category.name}</span>
+        </div>
+        {isOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5 opacity-50" />}
+      </button>
+      
+      {isOpen && (
+        <div className="ml-9 space-y-1 py-1">
+          {category.subs.map((sub: string, i: number) => (
+            <button 
+              key={i}
+              className="w-full text-left px-2 py-1.5 text-xs text-muted-foreground hover:text-brand-dot hover:bg-brand-dot/5 rounded-lg transition-all"
+            >
+              {sub}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function FindHomePage() {
   return (
@@ -41,33 +83,14 @@ export default function FindHomePage() {
           </div>
 
           {/* Categories */}
-          <div className="space-y-1">
+          <div className="space-y-4">
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-3 mb-2">Categories</p>
-            {[
-              { name: "All Properties", icon: Home, count: "1.2k" },
-              { name: "Apartments", icon: Building2, count: "450" },
-              { name: "Bedsitters", icon: Home, count: "320" },
-              { name: "Mansions", icon: ShieldCheck, count: "120" },
-              { name: "Commercial", icon: Briefcase, count: "85" },
-              { name: "Short Stays", icon: Clock, count: "210" },
-            ].map((cat, i) => {
-              const Icon = cat.icon;
-              return (
-                <button 
-                  key={i} 
-                  className={cn(
-                    "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all group",
-                    i === 0 ? "bg-brand-dot/10 text-brand-dot" : "hover:bg-accent text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon className={cn("h-4 w-4", i === 0 ? "text-brand-dot" : "group-hover:text-brand-dot transition-colors")} />
-                    <span className="text-sm font-semibold">{cat.name}</span>
-                  </div>
-                  <span className="text-[10px] font-bold bg-muted px-1.5 py-0.5 rounded-md text-muted-foreground group-hover:bg-background transition-colors">{cat.count}</span>
-                </button>
-              );
-            })}
+            
+            <div className="space-y-2">
+              {CATEGORIES.map((category, idx) => (
+                <CategoryItem key={idx} category={category} defaultOpen={idx === 0} />
+              ))}
+            </div>
           </div>
 
           {/* Quick Filters */}
