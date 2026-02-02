@@ -15,6 +15,7 @@ import {
   Clock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/Footer";
 import { CATEGORIES, Category } from "@/lib/constants/categories";
 
 export default function CategoriesPage() {
@@ -27,7 +28,7 @@ export default function CategoriesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-10">
+    <div className="min-h-screen bg-background">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
         {/* Page Header */}
@@ -150,6 +151,7 @@ export default function CategoriesPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

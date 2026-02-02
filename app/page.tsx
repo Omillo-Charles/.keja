@@ -148,7 +148,7 @@ export default function FindHomePage() {
                       Just listed! 🌟 Stunning 2-bedroom suite in the heart of Kilimani. 
                       Features high-speed WiFi, 24/7 security, and a panoramic city view. 
                       Perfect for young professionals. 
-                      <span className="text-brand-dot ml-1 hover:underline">#KilimaniRentals #KejaHomes</span>
+                      <span className="text-brand-dot ml-1 hover:underline">#KilimaniRentals #DotkejaHomes</span>
                     </p>
 
                     {/* Image Gallery Placeholder */}
@@ -281,7 +281,7 @@ export default function FindHomePage() {
             <Link href="/cookies" className="hover:underline">Cookie Policy</Link>
             <Link href="/ads" className="hover:underline">Ads info</Link>
             <Link href="/more" className="hover:underline">More...</Link>
-            <span>&copy; 2024 .keja Inc.</span>
+            <span>&copy; {new Date().getFullYear()} .keja Inc.</span>
           </div>
         </div>
       </aside>
