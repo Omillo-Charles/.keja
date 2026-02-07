@@ -19,7 +19,8 @@ import {
   Phone,
   LayoutDashboard,
   Heart,
-  Plus
+  Plus,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +28,8 @@ type TabType = "overview" | "profile" | "history" | "payments" | "settings";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = React.useState<TabType>("overview");
+  const [userRole, setUserRole] = React.useState<"tenant" | "landlord" | "agent">("tenant");
+  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = React.useState(false);
   const router = useRouter();
 
   const sidebarItems = [
@@ -42,14 +45,92 @@ export default function DashboardPage() {
     router.push("/");
   };
 
+  const selectRole = (role: "tenant" | "landlord" | "agent") => {
+    setUserRole(role);
+    setIsRoleDropdownOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          {/* Sidebar */}
-          <aside className="w-full md:w-64 md:sticky md:top-20 shrink-0 self-start">
-            <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-sm">
-              <div className="p-6 border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+        {/* Top Header Section with Role Switcher */}
+        <div className="bg-background rounded-2xl border border-border shadow-sm p-4 md:p-6 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="h-16 w-16 rounded-2xl bg-brand-dot/10 flex items-center justify-center text-brand-dot font-black text-2xl border-2 border-brand-dot/20">
+                JD
+              </div>
+              <div>
+                <h2 className="text-xl font-black text-foreground">John Doe</h2>
+                <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+              </div>
+            </div>
+
+            {/* Role Switcher Dropdown */}
+            <div className="relative">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2 ml-1">Current Workspace</p>
+              <button 
+                onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
+                className="flex items-center gap-4 px-5 py-3 bg-brand-dot text-white rounded-xl font-bold shadow-lg shadow-brand-dot/20 hover:scale-[1.02] transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="h-5 w-5" />
+                  <span className="capitalize">{userRole} Dashboard</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 transition-transform duration-300", isRoleDropdownOpen && "rotate-180")} />
+              </button>
+
+              {isRoleDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-background border border-border rounded-2xl shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                  <div className="p-2 space-y-1">
+                    {(["tenant", "landlord", "agent"] as const).map((role) => (
+                      <button
+                        key={role}
+                        onClick={() => selectRole(role)}
+                        className={cn(
+                          "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all",
+                          userRole === role 
+                            ? "bg-brand-dot/10 text-brand-dot" 
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )}
+                      >
+                        <span className="capitalize">{role} Dashboard</span>
+                        {userRole === role && <div className="h-2 w-2 rounded-full bg-brand-dot" />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start relative">
+          {/* Mobile Sidebar (Horizontal Scroll) */}
+          <div className="md:hidden w-full overflow-x-auto pb-2 custom-scrollbar shrink-0">
+            <div className="flex items-center gap-2 min-w-max">
+              {sidebarItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id as TabType)}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap",
+                    activeTab === item.id 
+                      ? "bg-brand-dot text-white shadow-md shadow-brand-dot/20" 
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
+                  )}
+                >
+                  <item.icon className="h-3.5 w-3.5" />
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Sidebar */}
+          <aside className="hidden md:flex w-full md:w-64 md:sticky md:top-24 md:h-[calc(100vh-8rem)] shrink-0 self-start">
+            <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-sm h-full flex flex-col w-full">
+              <div className="p-6 border-b border-border shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-brand-dot/10 flex items-center justify-center text-brand-dot font-bold text-xl border-2 border-brand-dot/20">
                     JD
@@ -60,42 +141,55 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              <nav className="p-2">
-                {sidebarItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id as TabType)}
-                    className={cn(
-                      "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
-                      activeTab === item.id 
-                        ? "bg-brand-dot text-white shadow-md shadow-brand-dot/20" 
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    )}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </button>
-                ))}
-                <div className="mt-4 pt-4 border-t border-border">
-                  <button 
-                    onClick={handleSignOut}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sign Out
-                  </button>
+              <nav className="p-2 overflow-y-auto flex-1 custom-scrollbar">
+                  <div className="space-y-1">
+                    {sidebarItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id as TabType)}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all mb-1",
+                        activeTab === item.id 
+                          ? "bg-brand-dot text-white shadow-md shadow-brand-dot/20" 
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </button>
+                  ))}
                 </div>
               </nav>
+              <div className="p-2 border-t border-border shrink-0">
+                <button 
+                  onClick={handleSignOut}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </button>
+              </div>
             </div>
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 space-y-6">
-            {activeTab === "overview" && <OverviewSection />}
+          <main className="flex-1 w-full space-y-6">
+            {activeTab === "overview" && <OverviewSection userRole={userRole} />}
             {activeTab === "profile" && <ProfileSection />}
             {activeTab === "history" && <HistorySection />}
             {activeTab === "payments" && <PaymentsSection />}
             {activeTab === "settings" && <SettingsSection />}
+            
+            {/* Mobile Logout Button */}
+            <div className="md:hidden pt-4">
+              <button 
+                onClick={handleSignOut}
+                className="w-full flex items-center justify-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold text-destructive bg-destructive/5 border border-destructive/10 transition-all"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out from Dashboard
+              </button>
+            </div>
           </main>
         </div>
       </div>
@@ -103,12 +197,22 @@ export default function DashboardPage() {
   );
 }
 
-function OverviewSection() {
+function OverviewSection({ userRole }: { userRole: string }) {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-black tracking-tight">Welcome back, <span className="text-brand-dot">John!</span></h1>
-        <p className="text-sm text-muted-foreground">Saturday, February 7, 2026</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-black tracking-tight">
+            Welcome back, <span className="text-brand-dot">John!</span>
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            You are currently viewing your <span className="font-bold text-foreground capitalize">{userRole}</span> dashboard.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-background px-4 py-2 rounded-xl border border-border shadow-sm self-start">
+          <Clock className="h-4 w-4 text-brand-dot" />
+          {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
