@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Mail, 
   Lock, 
@@ -18,12 +19,16 @@ import { cn } from "@/lib/utils";
 export default function AuthPage() {
   const [mode, setMode] = React.useState<"signin" | "signup">("signin");
   const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     // Simulate auth logic
-    setTimeout(() => setIsLoading(false), 1500);
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push("/dashboard");
+    }, 1500);
   };
 
   return (

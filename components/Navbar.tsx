@@ -28,7 +28,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const tenantNavItems = [
   { name: "Find Home", href: "/", icon: SearchCode },
   { name: "Categories", href: "/categories", icon: Building2 },
-  { name: "Favorites", href: "/favorites", icon: Heart },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Support", href: "/help", icon: HelpCircle },
 ];
 
@@ -242,16 +242,14 @@ export function Navbar() {
         </div>
         
         <div className="grid grid-cols-2 gap-4 mb-8">
-          <button 
-            onClick={() => {
-              // setIsLandlord(!isLandlord); // Commented out since setIsLandlord is not defined
-              setShowMobileMenu(false);
-            }}
+          <Link 
+            href="/dashboard"
+            onClick={() => setShowMobileMenu(false)}
             className="flex flex-col items-center justify-center p-4 bg-muted/50 rounded-2xl border border-border hover:border-brand-dot/50 transition-all gap-2"
           >
-            <SearchCode className="h-6 w-6 text-brand-dot" />
-            <span className="text-xs font-semibold">Switch to {isLandlord ? "Tenant" : "Landlord"}</span>
-          </button>
+            <UserCircle className="h-6 w-6 text-brand-dot" />
+            <span className="text-xs font-semibold">My Profile</span>
+          </Link>
           
           <Link 
             href="/help"
