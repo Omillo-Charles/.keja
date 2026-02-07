@@ -28,13 +28,13 @@ import { ThemeToggle } from "./ThemeToggle";
 const tenantNavItems = [
   { name: "Find Home", href: "/", icon: SearchCode },
   { name: "Categories", href: "/categories", icon: Building2 },
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/dashboard/tenant", icon: LayoutDashboard },
   { name: "Support", href: "/help", icon: HelpCircle },
 ];
 
 // Navigation for Landlords (Management)
 const landlordNavItems = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/dashboard/landlord", icon: LayoutDashboard },
   { name: "My Properties", href: "/properties", icon: Building2 },
   { name: "Tenants", href: "/tenants", icon: Users },
   { name: "Settings", href: "/settings", icon: Settings },

@@ -27,7 +27,7 @@ export default function AuthPage() {
     // Simulate auth logic
     setTimeout(() => {
       setIsLoading(false);
-      router.push("/dashboard");
+      router.push("/dashboard/tenant");
     }, 1500);
   };
 
