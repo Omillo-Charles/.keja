@@ -103,7 +103,7 @@ export function Footer() {
             <h4 className="font-bold text-sm mb-6 uppercase tracking-widest text-foreground">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: "About Us", href: "#" },
+                { name: "About Us", href: "/about" },
                 { name: "Terms of Service", href: "/terms" },
                 { name: "Privacy Policy", href: "/privacy" },
                 { name: "Cookie Policy", href: "/cookies" },

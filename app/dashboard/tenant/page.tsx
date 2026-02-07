@@ -53,9 +53,9 @@ export default function TenantDashboard() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 md:pt-4 md:pb-8">
         {/* Top Header Section with Role Switcher */}
-        <div className="bg-background rounded-2xl border border-border shadow-sm p-4 md:p-6 mb-8">
+        <div className="bg-background rounded-2xl border border-border shadow-sm p-4 md:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="h-16 w-16 rounded-2xl bg-brand-dot/10 flex items-center justify-center text-brand-dot font-black text-2xl border-2 border-brand-dot/20">
