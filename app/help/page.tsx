@@ -31,7 +31,7 @@ import { cn } from "@/lib/utils";
 const faqs = [
   {
     question: "How do I list my property on .keja?",
-    answer: "To list a property, switch to 'Landlord' mode in the navigation bar, then click on 'Add Property'. You'll need to provide details like location, price, and high-quality photos."
+    answer: "To list a property, you need to create a Landlord account. Once verified, you'll be able to access the property management dashboard to add details like location, price, and high-quality photos."
   },
   {
     question: "Is the payment system secure?",

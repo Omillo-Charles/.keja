@@ -41,7 +41,7 @@ const landlordNavItems = [
 ];
 
 export function Navbar() {
-  const [isLandlord, setIsLandlord] = React.useState(false); // Simulation for logged in state
+  const isLandlord = false; // Set to false by default as the switch has been removed
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
   const pathname = usePathname();
 
@@ -53,23 +53,12 @@ export function Navbar() {
       <div className="hidden md:block w-full bg-primary text-primary-foreground py-1.5 px-4 sm:px-6 lg:px-8 text-[10px] sm:text-xs font-medium">
         <div className="w-full flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-4">
-            <span className="flex items-center gap-1.5">
-              <span className="h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-green-500 animate-pulse" />
-              {isLandlord ? "Management" : "Finder"}
-            </span>
             <span className="hidden md:flex items-center gap-1.5">
               <Phone className="h-3 w-3" />
               Support: +254 700 000 000
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Demo Toggle - In a real app, this would be based on Auth session */}
-            <button 
-              onClick={() => setIsLandlord(!isLandlord)}
-              className="px-2 py-0.5 bg-white/10 hover:bg-white/20 rounded transition-colors"
-            >
-              Switch to {isLandlord ? "Tenant" : "Landlord"}
-            </button>
             <Link href="/help" className="hover:underline hidden sm:flex items-center gap-1">
               <HelpCircle className="h-3 w-3" />
               Help
@@ -255,7 +244,7 @@ export function Navbar() {
         <div className="grid grid-cols-2 gap-4 mb-8">
           <button 
             onClick={() => {
-              setIsLandlord(!isLandlord);
+              // setIsLandlord(!isLandlord); // Commented out since setIsLandlord is not defined
               setShowMobileMenu(false);
             }}
             className="flex flex-col items-center justify-center p-4 bg-muted/50 rounded-2xl border border-border hover:border-brand-dot/50 transition-all gap-2"
